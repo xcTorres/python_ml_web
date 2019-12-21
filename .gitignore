@@ -3,5 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+info.log
 .idea
 log

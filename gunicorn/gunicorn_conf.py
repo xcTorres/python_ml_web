@@ -1,5 +1,7 @@
 import os
 import multiprocessing
+from algo.linear_regression import LinearModel
+from sklearn import datasets
 
 LOCAL_HOST = '127.0.0.1'
 
@@ -14,3 +16,14 @@ pidfile = '/var/run/gunicorn.pid'
 accesslog = '/var/log/gunicorn_acess.log'
 errorlog = '/var/log/gunicorn_error.log'
 loglevel = 'info'
+
+
+model = LinearModel(datasets.load_boston())
+model.train()
+
+def pre_request(worker, req):
+    req.headers.append(('MODEL', model))  # transfer the model to flask workers.
+
+pre_request = pre_request
+
+

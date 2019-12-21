@@ -8,3 +8,5 @@ from config import CONFIG_ROOT
 
 logging.config.fileConfig(os.path.join(CONFIG_ROOT, "logging.conf"))
 logger = logging.getLogger("algo")
+
+

@@ -26,5 +26,5 @@ RUN mkdir -p /var/log/supervisor
 RUN chmod +x ./gunicorn/gunicorn-start.sh && \
     chmod +x ./gunicorn/supervisor.conf
 
-ENTRYPOINT ["/usr/local/bin/supervisord", "-c", "./gunicorn/supervisord.conf"]
-
+#ENTRYPOINT ["/usr/local/bin/supervisord", "-c", "./gunicorn/supervisord.conf"]
+ENTRYPOINT ["./gunicorn/gunicorn-start.sh"]

@@ -6,5 +6,5 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from web_app.views import hello_world
-app.register_blueprint(blueprint=hello_world.hello_world_blueprint)
+from web_app.views import house_pricing
+app.register_blueprint(blueprint=house_pricing.house_pricing_blueprint)
