@@ -1,5 +1,5 @@
-# MachineLearning Python Web Service 
-python_web is a sample python web for machine learning.
+# Machine Learning Python Web Service 
+python_web is a sample python web service for machine learning.
 
 ## Build 
 
