@@ -11,9 +11,9 @@ port = os.environ.get("PORT", 8020)
 bind = ':'.join([LOCAL_HOST, str(port)])
 time_out = os.environ.get("TIME_OUT", 120)
 
-# pidfile = '/var/run/gunicorn.pid'
-# accesslog = '/var/log/gunicorn_acess.log'
-# errorlog = '/var/log/gunicorn_error.log'
+pidfile = '/var/run/gunicorn.pid'
+accesslog = '/var/log/gunicorn_acess.log'
+errorlog = '/var/log/gunicorn_error.log'
 loglevel = 'info'
 
 

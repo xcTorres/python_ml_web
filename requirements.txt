@@ -4,3 +4,4 @@ gunicorn==19.9.0
 locustio==0.11.0
 supervisor==4.1.0
 scikit-learn==0.22
+prometheus_client==0.7.1

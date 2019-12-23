@@ -3,12 +3,22 @@
 # @FileName: house_pricing.py
 
 import numpy as np
-from flask import request, Blueprint, jsonify
+from flask import request, Blueprint, jsonify, Response
 from algo import logger
+from prometheus_client import multiprocess
+from prometheus_client import generate_latest, CollectorRegistry, CONTENT_TYPE_LATEST, Gauge, Summary
 
 house_pricing_blueprint = Blueprint('house_pricing', __name__)
 
+"""
+    monitor metrics initialize
+"""
+IN_PROGRESS = Gauge("batch_assign_inprogress_requests", "batch assign inprogress requests number", multiprocess_mode='livesum')
+REQUEST_LATENCY = Summary('batch_assign_request_latency', 'batch assign request latency')
 
+
+@IN_PROGRESS.track_inprogress()
+@REQUEST_LATENCY.time()
 @house_pricing_blueprint.route('/pricing')
 def pricing():
 
@@ -24,3 +34,10 @@ def pricing():
         logger.error(e)
         return jsonify({'msg': str(e), 'exception': type(e).__name__}), 500
 
+
+@house_pricing_blueprint.route("/metrics")
+def metrics():
+    registry = CollectorRegistry()
+    multiprocess.MultiProcessCollector(registry)
+    data = generate_latest(registry)
+    return Response(data, mimetype=CONTENT_TYPE_LATEST)
