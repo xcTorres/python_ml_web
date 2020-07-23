@@ -40,7 +40,6 @@ def pricing():
         feature = [crim, zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, b, lstat]
     try:
         x = np.asarray([feature], dtype=np.float32)
-        print(x.tolist())
         t = worker.process.s({'x': x.tolist()})
         result = t()
         logger.info({'price': result})

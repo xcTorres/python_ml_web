@@ -1,6 +1,7 @@
 # @Time    : 22/7/20 17:43
 # @Author  :  xcTorres
 # @FileName: worker.py
+import time
 
 from celery import Celery
 from worker import celery_config
@@ -20,4 +21,5 @@ def process(data):
         model = LinearModel(datasets.load_boston())
         model.train()
     res = model.predict(data['x'])
+    time.sleep(0.02)
     return res.tolist()

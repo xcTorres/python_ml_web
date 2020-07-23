@@ -5,4 +5,4 @@ LOG_CONFIG_FILE=$APP_DIR/config/logging.conf
 
 gunicorn --log-config $LOG_CONFIG_FILE \
          -c ${APP_DIR}/gunicorn/gunicorn_conf.py \
-         web_app.models:app
+         web_app.manage:app

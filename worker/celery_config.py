@@ -26,7 +26,7 @@ task_default_delivery_mode = 1
 accept_content = ['json']
 
 # only give 1 task per worker so the task will be evenly distributed
-worker_prefetch_multiplier = 1
+worker_prefetch_multiplier = 5
 timezone = 'Asia/Singapore'
 enable_utc = True
 
