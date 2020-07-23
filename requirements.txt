@@ -1,8 +1,9 @@
 numpy==1.17.2
 Flask==1.1.1
 gunicorn==19.9.0
-locustio==0.11.0
 supervisor==4.1.0
 scikit-learn==0.22
 prometheus_client==0.7.1
 supervisor==4.1.0
+celery[redis]
+celery[librabbitmq]

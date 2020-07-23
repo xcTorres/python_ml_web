@@ -5,6 +5,7 @@
 import numpy as np
 from flask import request, Blueprint, jsonify, Response
 from algo import logger
+from worker import worker
 from prometheus_client import multiprocess
 from prometheus_client import generate_latest, CollectorRegistry, CONTENT_TYPE_LATEST, Gauge, Summary
 
@@ -38,11 +39,12 @@ def pricing():
         lstat = request.args.get('LSTAT', 12.653)
         feature = [crim, zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, b, lstat]
     try:
-        model = request.environ['HTTP_MODEL']
         x = np.asarray([feature], dtype=np.float32)
-        y = model.predict(x)
-        logger.info({'price': y[0]})
-        return jsonify({'price': y[0]}), 200
+        print(x.tolist())
+        t = worker.process.s({'x': x.tolist()})
+        result = t()
+        logger.info({'price': result})
+        return jsonify({'price': result}), 200
     except Exception as e:
         logger.error(e)
         return jsonify({'msg': str(e), 'exception': type(e).__name__}), 500

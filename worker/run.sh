@@ -1,0 +1,1 @@
+sudo celery multi start 1 -A worker.worker  -l info
