@@ -12,13 +12,16 @@ It is a good idea to decouple the http server and machine learning model using m
 ## Build 
 
 ```shell script
+    # create the network
+    docker network create demo
 
-    docker build -t python_web -f Dockerfile . 
+    # build the image
+    docker-compose build
 
-    docker run -it --rm \
-                    -p  8020:8020 \
-                    -e WORKERS=2 \
-                    python_web
+    # run the compose containers
+    docker-compose up
+
+    
 
 ```
 

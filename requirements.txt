@@ -1,6 +1,7 @@
 numpy==1.17.2
 Flask==1.1.1
 gunicorn==19.9.0
+gevent==20.6.2
 supervisor==4.1.0
 scikit-learn==0.22
 prometheus_client==0.7.1

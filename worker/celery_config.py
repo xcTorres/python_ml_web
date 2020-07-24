@@ -5,13 +5,13 @@
 
 broker_url = 'pyamqp://guest:guest@{}:{}//' \
     .format(
-        'localhost',
+        'rabbitmq',
         5672
         )
 
 broker_heartbeat = 0
 broker_pool_limit = 100
-result_backend = 'redis://localhost:6379'
+result_backend = 'redis://redis:6379'
 result_compression = 'gzip'
 result_expires = 60
 redis_max_connections = 1000

@@ -2,33 +2,18 @@ version: '3'
 services:
   web:
     build: .
-    command: bash -c "/usr/local/bin/supervisord -c ./gunicorn/supervisord.conf"
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '1'
-        reservations:
-          cpus: '1'
+    command: bash -c "python -m worker.warming && /usr/local/bin/supervisord -c ./gunicorn/supervisord.conf"
     networks:
-      - stack_assign
+      - demo
     ports:
      - "8020:8020"
     depends_on:
-      - rabbitmq
       - worker
     environment:
       - DEPLOY_ENV=COMPOSE
   worker:
     build: .
-    command: bash -c "./worker/run.sh"
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: '10'
-        reservations:
-          cpus: '6'
+    command: bash -c "python -m worker.warming && /usr/local/bin/supervisord -c ./worker/supervisord.conf"
     networks:
       - demo
     ports:
@@ -40,30 +25,12 @@ services:
       - DEPLOY_ENV=COMPOSE
   redis:
     image: "redis"
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: '2'
-          memory: 500M
-        reservations:
-          cpus: '1'
-          memory: 200M
     networks:
       - demo
     ports:
       - "6379:6379"
   rabbitmq:
     image: "rabbitmq:3-management"
-    deploy:
-      replicas: 3
-      resources:
-        limits:
-          cpus: '3'
-          memory: 500M
-        reservations:
-          cpus: '2'
-          memory: 200M
     networks:
       - demo
     ports:
@@ -71,7 +38,7 @@ services:
      - "15672:15672"
 
 networks:
-  stack_assign:
+  demo:
     # Use a custom driver
     external:
       name: demo
