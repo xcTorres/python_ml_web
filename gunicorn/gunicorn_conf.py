@@ -2,7 +2,7 @@ import os
 
 LOCAL_HOST = "0.0.0.0"
 
-workers = os.environ.get("WORKERS", 1)
+workers = os.environ.get("WORKERS", 2)
 worker_class = os.environ.get("WORKER_CLASS", "gevent")
 worker_connections = os.environ.get("WORKER_CONNECTIONS", 1000)
 port = os.environ.get("PORT", 8020)

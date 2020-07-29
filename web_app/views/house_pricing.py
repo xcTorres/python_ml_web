@@ -40,8 +40,9 @@ def pricing():
         feature = [crim, zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, b, lstat]
     try:
         x = np.asarray([feature], dtype=np.float32)
-        t = worker.process.s({'x': x.tolist()})
-        result = t()
+        t = worker.process.s({'x': x.tolist()}).apply_async()
+        result = t.get()
+        t.forget()
         logger.info({'price': result})
         return jsonify({'price': result}), 200
     except Exception as e:
