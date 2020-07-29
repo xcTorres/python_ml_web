@@ -2,8 +2,8 @@
 # @Author  :  KarKin
 # @FileName: worker.py
 
+import pickle
 from sklearn import datasets
-
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
@@ -37,3 +37,4 @@ class LinearModel(object):
 
 model = LinearModel(datasets.load_boston())
 model.train()
+
