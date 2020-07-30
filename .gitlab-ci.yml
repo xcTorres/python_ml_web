@@ -1,0 +1,13 @@
+image: python:latest
+
+before_script:
+  - python -V # Print out python version for debugging
+  - pip install -r requirements.txt
+
+retrain:
+  stage: build
+  script:
+  - python ./algo/train_model.py
+  artifacts:
+    paths:
+    - "./algo/*.pkl"

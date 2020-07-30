@@ -1,10 +1,9 @@
 version: '3'
 services:
   web:
+    image: karkkn96/exercises:tag_of_this_image
     build: .
     command: bash -c "python -m worker.warming && /usr/local/bin/supervisord -c ./gunicorn/supervisord.conf"
-    networks:
-      - demo
     ports:
      - "8020:8020"
     depends_on:
@@ -12,10 +11,9 @@ services:
     environment:
       - DEPLOY_ENV=COMPOSE
   worker:
+    image: karkkn96/exercises:tag_of_this_image_2
     build: .
     command: bash -c "python -m worker.warming && /usr/local/bin/supervisord -c ./worker/supervisord.conf"
-    networks:
-      - demo
     ports:
       - "5555:5555"
     depends_on:
@@ -25,20 +23,10 @@ services:
       - DEPLOY_ENV=COMPOSE
   redis:
     image: "redis"
-    networks:
-      - demo
     ports:
       - "6379:6379"
   rabbitmq:
     image: "rabbitmq:3-management"
-    networks:
-      - demo
     ports:
      - "5672:5672"
      - "15672:15672"
-
-networks:
-  demo:
-    # Use a custom driver
-    external:
-      name: demo

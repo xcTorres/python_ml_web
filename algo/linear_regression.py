@@ -3,24 +3,37 @@
 # @FileName: linear_regression.py
 
 import numpy as np
+import pickle
 from algo import logger
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
-
 class LinearModel(object):
 
-    def __init__(self, dataset):
-        self.model = LinearRegression()
-        self.dataset = dataset
+    def __init__(self, dataset, path = None):
+        
+        self.model_path = path
+        
+        if not path:
+            self.model = LinearRegression()
+            self.dataset = dataset
+        else:
+            with open(path, 'rb') as f:
+                self.model = pickle.load(f)    
 
     def train(self):
+
+        if self.model_path:
+            return 
 
         x = self.dataset.data
         y = self.dataset.target
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=5)
         self.model.fit(x_train, y_train)
+
+        with open('./algo/linear_regression.pkl', 'wb') as f:
+            pickle.dump(self.model, f)    
 
         # model evaluation for training set
         y_train_predict = self.model.predict(x_train)

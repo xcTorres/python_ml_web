@@ -29,3 +29,19 @@ It is a good idea to decouple the http server and machine learning model using m
 ```shell script
     curl http://127.0.0.1:8020/pricing?CRIM=2.8&ZN=10.211&INDUS=18.237
 ```
+
+## Simulate Kubernetes
+```
+minikube start 
+
+kompose convert
+
+kubectl apply -f frontend-service.yaml,redis-master-service.yaml,redis-slave-service.yaml,frontend-deployment.yaml,redis-master-deployment.yaml,redis-slave-deployment.yaml
+
+minikube service frontend
+
+minikube dashboard
+
+http://127.0.0.1:64438/pricing?CRIM=2.8&ZN=10.211&INDUS=18.237
+
+```
