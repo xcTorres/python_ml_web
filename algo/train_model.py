@@ -6,7 +6,7 @@ import pickle
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
+
 
 class LinearModel(object):
 
@@ -32,7 +32,9 @@ class LinearModel(object):
         self.model.fit(x_train, y_train)
 
         with open('./algo/linear_regression.pkl', 'wb') as f:
-            pickle.dump(self.model, f)    
+            pickle.dump(self.model, f)
+
+
 
 
 model = LinearModel(datasets.load_boston())

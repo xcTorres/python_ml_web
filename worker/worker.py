@@ -4,22 +4,16 @@
 import time
 
 from celery import Celery
+from algo.train_model import model
 from worker import celery_config
-from algo.linear_regression import LinearModel
-from sklearn import datasets
+
 
 celery = Celery(broker=celery_config.broker_url)
 celery.config_from_object(celery_config)
 
-model = None
-
 
 @celery.task(hard_time_limit=2)
 def process(data):
-    global model
-    if not model:
-        model = LinearModel(datasets.load_boston())
-        model.train()
-    res = model.predict(data['x'])
+    res = model.model.predict(data['x'])
     time.sleep(0.02)
     return res.tolist()
